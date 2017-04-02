@@ -1,0 +1,397 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/bubenshchykov/ngrok#readme"
+
+    >ngrok (v2.2.6)</a>
+</h1>
+<h4>node wrapper for ngrok</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.ngrok">module ngrok</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.ngrok.authtoken">
+            function <span class="apidocSignatureSpan">ngrok.</span>authtoken
+            <span class="apidocSignatureSpan">(token, cb)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.ngrok.connect">
+            function <span class="apidocSignatureSpan">ngrok.</span>connect
+            <span class="apidocSignatureSpan">(opts, cb)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.ngrok.disconnect">
+            function <span class="apidocSignatureSpan">ngrok.</span>disconnect
+            <span class="apidocSignatureSpan">(publicUrl, cb)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.ngrok.kill">
+            function <span class="apidocSignatureSpan">ngrok.</span>kill
+            <span class="apidocSignatureSpan">(cb)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">number <span class="apidocSignatureSpan">ngrok.</span>_eventsCount</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">ngrok.</span>_events</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">ngrok.</span>domain</span>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.ngrok._events">module ngrok._events</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.ngrok._events.error">
+            function <span class="apidocSignatureSpan">ngrok._events.</span>error
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.ngrok" id="apidoc.module.ngrok">module ngrok</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.ngrok.authtoken" id="apidoc.element.ngrok.authtoken">
+        function <span class="apidocSignatureSpan">ngrok.</span>authtoken
+        <span class="apidocSignatureSpan">(token, cb)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function authtoken(token, cb) {
+	cb = cb || noop;
+	var a = spawn(
+		bin,
+		[&#x27;authtoken&#x27;, token],
+		{cwd: __dirname + &#x27;/bin&#x27;});
+	a.stdout.once(&#x27;data&#x27;, done.bind(null, null, token));
+	a.stderr.once(&#x27;data&#x27;, done.bind(null, new Error(&#x27;cant set authtoken&#x27;)));
+
+	function done(err, token) {
+		cb(err, token);
+		a.kill();
+	}
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+ngrok http 8080
+```
+
+## authtoken
+You can create basic http-https-tcp tunnel without authtoken. For custom subdomains and more you should  obtain authtoken by signing
+ up at [ngrok.com](https://ngrok.com). Once you set it, it&#x27;s stored in ngrok config and used for all tunnels. Few ways:
+
+```
+ngrok.<span class="apidocCodeKeywordSpan">authtoken</span>(token, function(err, token) {});
+ngrok.connect({authtoken: token, ...}, function (err, url) {});
+ngrok authtoken &#x3c;token&#x3e;
+```
+
+## connect
+```javascript
+var ngrok = require(&#x27;ngrok&#x27;);
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.ngrok.connect" id="apidoc.element.ngrok.connect">
+        function <span class="apidocSignatureSpan">ngrok.</span>connect
+        <span class="apidocSignatureSpan">(opts, cb)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function connect(opts, cb) {
+
+	if (typeof opts === &#x27;function&#x27;) {
+		cb = opts;
+	}
+
+	cb = cb || noop;
+	opts = defaults(opts);
+
+	if (api) {
+		return runTunnel(opts, cb);
+	}
+
+	lock(&#x27;ngrok&#x27;, function(release) {
+		function run(err) {
+			if (err) {
+				emitter.emit(&#x27;error&#x27;, err);
+				return cb(err);
+			}
+			runNgrok(opts, release(function(err) {
+				if (err) {
+					emitter.emit(&#x27;error&#x27;, err);
+					return cb(err);
+				}
+				runTunnel(opts, cb)
+			}));
+		}
+
+		opts.authtoken ?
+			authtoken(opts.authtoken, run) :
+			run(null);
+	});
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+usage
+===
+
+[![NPM](https://nodei.co/npm/ngrok.png?global=true&#x26;&#x26;downloads=true&#x26;downloadRank=true&#x26;stars=true)](https://nodei
+.co/npm/ngrok/)
+
+```
+var ngrok = require(&#x27;ngrok&#x27;);
+ngrok.<span class="apidocCodeKeywordSpan">connect</span>(function (err, url) {});
+
+or
+
+npm install ngrok -g
+ngrok http 8080
+```
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.ngrok.disconnect" id="apidoc.element.ngrok.disconnect">
+        function <span class="apidocSignatureSpan">ngrok.</span>disconnect
+        <span class="apidocSignatureSpan">(publicUrl, cb)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function disconnect(publicUrl, cb) {
+	cb = cb || noop;
+	if (typeof publicUrl === &#x27;function&#x27;) {
+		cb = publicUrl;
+		publicUrl = null;
+	}
+	if (!api) {
+		return cb();
+	}
+	if (publicUrl) {
+		return api.del(
+			tunnels[publicUrl],
+			function(err, resp, body) {
+				if (err || resp.statusCode !== 204) {
+					return cb(err || new Error(body));
+				}
+				delete tunnels[publicUrl];
+				emitter.emit(&#x27;disconnect&#x27;, publicUrl);
+				return cb();
+			});
+	}
+
+	return async.each(
+		Object.keys(tunnels),
+		disconnect,
+		function(err) {
+			if (err) {
+				emitter.emit(&#x27;error&#x27;, err);
+				return cb(err);
+			}
+			emitter.emit(&#x27;disconnect&#x27;);
+			return cb();
+		});
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+Other options: `name, inspect, host_header, bind_tls, hostname, crt, key, client_cas, remote_addr` - read [here](https://ngrok.com
+/docs)
+
+Note on regions: region used in first tunnel will be used for all next tunnels too.
+
+## disconnect
+The ngrok and all tunnels will be killed when node process is done. To stop the tunnels use
+```javascript
+ngrok.<span class="apidocCodeKeywordSpan">disconnect</span>(url); // stops one
+ngrok.disconnect(); // stops all
+ngrok.kill(); // kills ngrok process
+```
+
+Note on http tunnels: by default bind_tls is true, so whenever you use http proto two tunnels are created - http and https. If you
+ disconnect https tunnel, http tunnel remains open. You might want to close them both by passing http-version url, or simply by
+disconnecting all in one go ```ngrok.disconnect()```.
+
+## emitter
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.ngrok.kill" id="apidoc.element.ngrok.kill">
+        function <span class="apidocSignatureSpan">ngrok.</span>kill
+        <span class="apidocSignatureSpan">(cb)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function kill(cb) {
+	cb = cb || noop;
+	if (!ngrok) {
+		return cb();
+	}
+	ngrok.on(&#x27;exit&#x27;, function() {
+		api = null;
+		tunnels = {};
+		emitter.emit(&#x27;disconnect&#x27;);
+		return cb();
+	});
+	return ngrok.kill();
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+Note on regions: region used in first tunnel will be used for all next tunnels too.
+
+## disconnect
+The ngrok and all tunnels will be killed when node process is done. To stop the tunnels use
+```javascript
+ngrok.disconnect(url); // stops one
+ngrok.disconnect(); // stops all
+ngrok.<span class="apidocCodeKeywordSpan">kill</span>(); // kills ngrok process
+```
+
+Note on http tunnels: by default bind_tls is true, so whenever you use http proto two tunnels are created - http and https. If you
+ disconnect https tunnel, http tunnel remains open. You might want to close them both by passing http-version url, or simply by
+disconnecting all in one go ```ngrok.disconnect()```.
+
+## emitter
+Also you can use ngrok as an event emitter, it fires &#x22;connect&#x22;, &#x22;disconnect&#x22; and &#x22;error&#x22; events
+```javascript
+...</pre></li>
+    </ul>
+
+
+
+
+
+
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.ngrok._events" id="apidoc.module.ngrok._events">module ngrok._events</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.ngrok._events.error" id="apidoc.element.ngrok._events.error">
+        function <span class="apidocSignatureSpan">ngrok._events.</span>error
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">error = function () {}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+	freebsdx64:	cdn + cdnPath + &#x27;freebsd-amd64.zip&#x27;
+};
+
+var arch = process.env.NGROK_ARCH || (os.platform() + os.arch());
+var cdnFile = cdnFiles[arch];
+
+if (!cdnFile) {
+	console.<span class="apidocCodeKeywordSpan">error</span>(&#x27;ngrok - platform &#x27; + arch + &#x27; is not supported.&#x27;);
+	process.exit(1);
+}
+
+var localPath = __dirname + &#x27;/bin/&#x27;;
+var localFile = localPath + &#x27;ngrok.zip&#x27;;
+
+console.log(&#x27;ngrok - downloading binary &#x27; + cdnFile + &#x27; ...&#x27;);
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
