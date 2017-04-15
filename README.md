@@ -1,11 +1,13 @@
 # api documentation for  [ngrok (v2.2.6)](https://github.com/bubenshchykov/ngrok#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-ngrok.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-ngrok) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-ngrok.svg)](https://travis-ci.org/npmdoc/node-npmdoc-ngrok)
 #### node wrapper for ngrok
 
-[![NPM](https://nodei.co/npm/ngrok.png?downloads=true)](https://www.npmjs.com/package/ngrok)
+[![NPM](https://nodei.co/npm/ngrok.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/ngrok)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-ngrok/build/screen-capture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-ngrok_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-ngrok/build..beta..travis-ci.org/apidoc.html)
+[![apidoc](https://npmdoc.github.io/node-npmdoc-ngrok/build/screenCapture.buildCi.browser.apidoc.html.png)](https://npmdoc.github.io/node-npmdoc-ngrok/build/apidoc.html)
 
-![package-listing](https://npmdoc.github.io/node-npmdoc-ngrok/build/screen-capture.npmPackageListing.svg)
+![npmPackageListing](https://npmdoc.github.io/node-npmdoc-ngrok/build/screenCapture.npmPackageListing.svg)
+
+![npmPackageDependencyTree](https://npmdoc.github.io/node-npmdoc-ngrok/build/screenCapture.npmPackageDependencyTree.svg)
 
 
 
@@ -59,13 +61,11 @@
     "main": "index.js",
     "maintainers": [
         {
-            "name": "bubenshchykov",
-            "email": "a.bubenshchykov@gmail.com"
+            "name": "bubenshchykov"
         }
     ],
     "name": "ngrok",
     "optionalDependencies": {},
-    "readme": "ERROR: No README data found!",
     "repository": {
         "type": "git",
         "url": "git://github.com/bubenshchykov/ngrok.git"
