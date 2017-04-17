@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/bubenshchykov/ngrok#readme"
-
-    >ngrok (v2.2.6)</a>
+    <a href="https://github.com/bubenshchykov/ngrok#readme">ngrok (v2.2.6)</a>
 </h1>
 <h4>node wrapper for ngrok</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.ngrok">module ngrok</a><ol>
 
@@ -234,10 +227,10 @@
 	cb = cb || noop;
 	var a = spawn(
 		bin,
-		[&#x27;authtoken&#x27;, token],
-		{cwd: __dirname + &#x27;/bin&#x27;});
-	a.stdout.once(&#x27;data&#x27;, done.bind(null, null, token));
-	a.stderr.once(&#x27;data&#x27;, done.bind(null, new Error(&#x27;cant set authtoken&#x27;)));
+		['authtoken', token],
+		{cwd: __dirname + '/bin'});
+	a.stdout.once('data', done.bind(null, null, token));
+	a.stderr.once('data', done.bind(null, new Error('cant set authtoken')));
 
 	function done(err, token) {
 		cb(err, token);
@@ -250,17 +243,17 @@ ngrok http 8080
 
 ## authtoken
 You can create basic http-https-tcp tunnel without authtoken. For custom subdomains and more you should  obtain authtoken by signing
- up at [ngrok.com](https://ngrok.com). Once you set it, it&#x27;s stored in ngrok config and used for all tunnels. Few ways:
+ up at [ngrok.com](https://ngrok.com). Once you set it, it's stored in ngrok config and used for all tunnels. Few ways:
 
 ```
 ngrok.<span class="apidocCodeKeywordSpan">authtoken</span>(token, function(err, token) {});
 ngrok.connect({authtoken: token, ...}, function (err, url) {});
-ngrok authtoken &#x3c;token&#x3e;
+ngrok authtoken &lt;token&gt;
 ```
 
 ## connect
 ```javascript
-var ngrok = require(&#x27;ngrok&#x27;);
+var ngrok = require('ngrok');
 ...</pre></li>
     </ul>
 
@@ -275,7 +268,7 @@ var ngrok = require(&#x27;ngrok&#x27;);
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function connect(opts, cb) {
 
-	if (typeof opts === &#x27;function&#x27;) {
+	if (typeof opts === 'function') {
 		cb = opts;
 	}
 
@@ -286,15 +279,15 @@ var ngrok = require(&#x27;ngrok&#x27;);
 		return runTunnel(opts, cb);
 	}
 
-	lock(&#x27;ngrok&#x27;, function(release) {
+	lock('ngrok', function(release) {
 		function run(err) {
 			if (err) {
-				emitter.emit(&#x27;error&#x27;, err);
+				emitter.emit('error', err);
 				return cb(err);
 			}
 			runNgrok(opts, release(function(err) {
 				if (err) {
-					emitter.emit(&#x27;error&#x27;, err);
+					emitter.emit('error', err);
 					return cb(err);
 				}
 				runTunnel(opts, cb)
@@ -310,11 +303,11 @@ var ngrok = require(&#x27;ngrok&#x27;);
 usage
 ===
 
-[![NPM](https://nodei.co/npm/ngrok.png?global=true&#x26;&#x26;downloads=true&#x26;downloadRank=true&#x26;stars=true)](https://nodei
+[![NPM](https://nodei.co/npm/ngrok.png?global=true&amp;&amp;downloads=true&amp;downloadRank=true&amp;stars=true)](https://nodei
 .co/npm/ngrok/)
 
 ```
-var ngrok = require(&#x27;ngrok&#x27;);
+var ngrok = require('ngrok');
 ngrok.<span class="apidocCodeKeywordSpan">connect</span>(function (err, url) {});
 
 or
@@ -336,7 +329,7 @@ ngrok http 8080
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function disconnect(publicUrl, cb) {
 	cb = cb || noop;
-	if (typeof publicUrl === &#x27;function&#x27;) {
+	if (typeof publicUrl === 'function') {
 		cb = publicUrl;
 		publicUrl = null;
 	}
@@ -351,7 +344,7 @@ ngrok http 8080
 					return cb(err || new Error(body));
 				}
 				delete tunnels[publicUrl];
-				emitter.emit(&#x27;disconnect&#x27;, publicUrl);
+				emitter.emit('disconnect', publicUrl);
 				return cb();
 			});
 	}
@@ -361,10 +354,10 @@ ngrok http 8080
 		disconnect,
 		function(err) {
 			if (err) {
-				emitter.emit(&#x27;error&#x27;, err);
+				emitter.emit('error', err);
 				return cb(err);
 			}
-			emitter.emit(&#x27;disconnect&#x27;);
+			emitter.emit('disconnect');
 			return cb();
 		});
 }</pre></li>
@@ -404,10 +397,10 @@ disconnecting all in one go ```ngrok.disconnect()```.
 	if (!ngrok) {
 		return cb();
 	}
-	ngrok.on(&#x27;exit&#x27;, function() {
+	ngrok.on('exit', function() {
 		api = null;
 		tunnels = {};
-		emitter.emit(&#x27;disconnect&#x27;);
+		emitter.emit('disconnect');
 		return cb();
 	});
 	return ngrok.kill();
@@ -428,7 +421,7 @@ Note on http tunnels: by default bind_tls is true, so whenever you use http prot
 disconnecting all in one go ```ngrok.disconnect()```.
 
 ## emitter
-Also you can use ngrok as an event emitter, it fires &#x22;connect&#x22;, &#x22;disconnect&#x22; and &#x22;error&#x22; events
+Also you can use ngrok as an event emitter, it fires "connect", "disconnect" and "error" events
 ```javascript
 ...</pre></li>
     </ul>
@@ -455,21 +448,21 @@ Also you can use ngrok as an event emitter, it fires &#x22;connect&#x22;, &#x22;
     <ul>
     <li>description and source-code<pre class="apidocCodePre">error = function () {}</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-	freebsdx64:	cdn + cdnPath + &#x27;freebsd-amd64.zip&#x27;
+	freebsdx64:	cdn + cdnPath + 'freebsd-amd64.zip'
 };
 
 var arch = process.env.NGROK_ARCH || (os.platform() + os.arch());
 var cdnFile = cdnFiles[arch];
 
 if (!cdnFile) {
-	console.<span class="apidocCodeKeywordSpan">error</span>(&#x27;ngrok - platform &#x27; + arch + &#x27; is not supported.&#x27;);
+	console.<span class="apidocCodeKeywordSpan">error</span>('ngrok - platform ' + arch + ' is not supported.');
 	process.exit(1);
 }
 
-var localPath = __dirname + &#x27;/bin/&#x27;;
-var localFile = localPath + &#x27;ngrok.zip&#x27;;
+var localPath = __dirname + '/bin/';
+var localFile = localPath + 'ngrok.zip';
 
-console.log(&#x27;ngrok - downloading binary &#x27; + cdnFile + &#x27; ...&#x27;);
+console.log('ngrok - downloading binary ' + cdnFile + ' ...');
 ...</pre></li>
     </ul>
 
@@ -489,21 +482,21 @@ console.log(&#x27;ngrok - downloading binary &#x27; + cdnFile + &#x27; ...&#x27;
     <ul>
     <li>description and source-code<pre class="apidocCodePre">error = function () {}</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-	freebsdx64:	cdn + cdnPath + &#x27;freebsd-amd64.zip&#x27;
+	freebsdx64:	cdn + cdnPath + 'freebsd-amd64.zip'
 };
 
 var arch = process.env.NGROK_ARCH || (os.platform() + os.arch());
 var cdnFile = cdnFiles[arch];
 
 if (!cdnFile) {
-	console.<span class="apidocCodeKeywordSpan">error</span>(&#x27;ngrok - platform &#x27; + arch + &#x27; is not supported.&#x27;);
+	console.<span class="apidocCodeKeywordSpan">error</span>('ngrok - platform ' + arch + ' is not supported.');
 	process.exit(1);
 }
 
-var localPath = __dirname + &#x27;/bin/&#x27;;
-var localFile = localPath + &#x27;ngrok.zip&#x27;;
+var localPath = __dirname + '/bin/';
+var localFile = localPath + 'ngrok.zip';
 
-console.log(&#x27;ngrok - downloading binary &#x27; + cdnFile + &#x27; ...&#x27;);
+console.log('ngrok - downloading binary ' + cdnFile + ' ...');
 ...</pre></li>
     </ul>
 
@@ -525,10 +518,10 @@ console.log(&#x27;ngrok - downloading binary &#x27; + cdnFile + &#x27; ...&#x27;
 	cb = cb || noop;
 	var a = spawn(
 		bin,
-		[&#x27;authtoken&#x27;, token],
-		{cwd: __dirname + &#x27;/bin&#x27;});
-	a.stdout.once(&#x27;data&#x27;, done.bind(null, null, token));
-	a.stderr.once(&#x27;data&#x27;, done.bind(null, new Error(&#x27;cant set authtoken&#x27;)));
+		['authtoken', token],
+		{cwd: __dirname + '/bin'});
+	a.stdout.once('data', done.bind(null, null, token));
+	a.stderr.once('data', done.bind(null, new Error('cant set authtoken')));
 
 	function done(err, token) {
 		cb(err, token);
@@ -541,17 +534,17 @@ ngrok http 8080
 
 ## authtoken
 You can create basic http-https-tcp tunnel without authtoken. For custom subdomains and more you should  obtain authtoken by signing
- up at [ngrok.com](https://ngrok.com). Once you set it, it&#x27;s stored in ngrok config and used for all tunnels. Few ways:
+ up at [ngrok.com](https://ngrok.com). Once you set it, it's stored in ngrok config and used for all tunnels. Few ways:
 
 ```
 ngrok.<span class="apidocCodeKeywordSpan">authtoken</span>(token, function(err, token) {});
 ngrok.connect({authtoken: token, ...}, function (err, url) {});
-ngrok authtoken &#x3c;token&#x3e;
+ngrok authtoken &lt;token&gt;
 ```
 
 ## connect
 ```javascript
-var ngrok = require(&#x27;ngrok&#x27;);
+var ngrok = require('ngrok');
 ...</pre></li>
     </ul>
 
@@ -571,7 +564,7 @@ var ngrok = require(&#x27;ngrok&#x27;);
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function connect(opts, cb) {
 
-	if (typeof opts === &#x27;function&#x27;) {
+	if (typeof opts === 'function') {
 		cb = opts;
 	}
 
@@ -582,15 +575,15 @@ var ngrok = require(&#x27;ngrok&#x27;);
 		return runTunnel(opts, cb);
 	}
 
-	lock(&#x27;ngrok&#x27;, function(release) {
+	lock('ngrok', function(release) {
 		function run(err) {
 			if (err) {
-				emitter.emit(&#x27;error&#x27;, err);
+				emitter.emit('error', err);
 				return cb(err);
 			}
 			runNgrok(opts, release(function(err) {
 				if (err) {
-					emitter.emit(&#x27;error&#x27;, err);
+					emitter.emit('error', err);
 					return cb(err);
 				}
 				runTunnel(opts, cb)
@@ -606,11 +599,11 @@ var ngrok = require(&#x27;ngrok&#x27;);
 usage
 ===
 
-[![NPM](https://nodei.co/npm/ngrok.png?global=true&#x26;&#x26;downloads=true&#x26;downloadRank=true&#x26;stars=true)](https://nodei
+[![NPM](https://nodei.co/npm/ngrok.png?global=true&amp;&amp;downloads=true&amp;downloadRank=true&amp;stars=true)](https://nodei
 .co/npm/ngrok/)
 
 ```
-var ngrok = require(&#x27;ngrok&#x27;);
+var ngrok = require('ngrok');
 ngrok.<span class="apidocCodeKeywordSpan">connect</span>(function (err, url) {});
 
 or
@@ -637,7 +630,7 @@ ngrok http 8080
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function disconnect(publicUrl, cb) {
 	cb = cb || noop;
-	if (typeof publicUrl === &#x27;function&#x27;) {
+	if (typeof publicUrl === 'function') {
 		cb = publicUrl;
 		publicUrl = null;
 	}
@@ -652,7 +645,7 @@ ngrok http 8080
 					return cb(err || new Error(body));
 				}
 				delete tunnels[publicUrl];
-				emitter.emit(&#x27;disconnect&#x27;, publicUrl);
+				emitter.emit('disconnect', publicUrl);
 				return cb();
 			});
 	}
@@ -662,10 +655,10 @@ ngrok http 8080
 		disconnect,
 		function(err) {
 			if (err) {
-				emitter.emit(&#x27;error&#x27;, err);
+				emitter.emit('error', err);
 				return cb(err);
 			}
-			emitter.emit(&#x27;disconnect&#x27;);
+			emitter.emit('disconnect');
 			return cb();
 		});
 }</pre></li>
@@ -710,10 +703,10 @@ disconnecting all in one go ```ngrok.disconnect()```.
 	if (!ngrok) {
 		return cb();
 	}
-	ngrok.on(&#x27;exit&#x27;, function() {
+	ngrok.on('exit', function() {
 		api = null;
 		tunnels = {};
-		emitter.emit(&#x27;disconnect&#x27;);
+		emitter.emit('disconnect');
 		return cb();
 	});
 	return ngrok.kill();
@@ -734,7 +727,7 @@ Note on http tunnels: by default bind_tls is true, so whenever you use http prot
 disconnecting all in one go ```ngrok.disconnect()```.
 
 ## emitter
-Also you can use ngrok as an event emitter, it fires &#x22;connect&#x22;, &#x22;disconnect&#x22; and &#x22;error&#x22; events
+Also you can use ngrok as an event emitter, it fires "connect", "disconnect" and "error" events
 ```javascript
 ...</pre></li>
     </ul>
@@ -748,3 +741,4 @@ Also you can use ngrok as an event emitter, it fires &#x22;connect&#x22;, &#x22;
     ]
 </div>
 </div>
+</body></html>
