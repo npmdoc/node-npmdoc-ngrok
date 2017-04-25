@@ -1,4 +1,7 @@
-# api documentation for  [ngrok (v2.2.6)](https://github.com/bubenshchykov/ngrok#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-ngrok.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-ngrok) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-ngrok.svg)](https://travis-ci.org/npmdoc/node-npmdoc-ngrok)
+# npmdoc-ngrok
+
+#### basic api documentation for  [ngrok (v2.2.6)](https://github.com/bubenshchykov/ngrok#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-ngrok.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-ngrok) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-ngrok.svg)](https://travis-ci.org/npmdoc/node-npmdoc-ngrok)
+
 #### node wrapper for ngrok
 
 [![NPM](https://nodei.co/npm/ngrok.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/ngrok)
